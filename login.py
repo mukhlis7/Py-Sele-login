@@ -162,7 +162,7 @@ try:
 
             else:
                 file12 = open('success.txt', 'a') 
-                file12.write(line) 
+                file12.write(line + "\n") 
                 file12.close()
                 
 
@@ -176,7 +176,7 @@ except Exception as e:
     file12 = open(saving_txt_file, 'a')
     for lin3 in alllines:
         lin3 = lin3.strip()
-        file12.write(lin3)
+        file12.write(lin3 + "\n")
 
     file12.close()
     file1.close() 
@@ -189,7 +189,7 @@ file12 = open(saving_txt_file, 'w')
 for lin3 in alllines:
     lin3 = lin3.strip()
      
-    file12.write(lin3) 
+    file12.write(lin3 + "\n") 
         
 
 file12.close()
